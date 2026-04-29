@@ -45,6 +45,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int gameCount(String person) {
+    this.checkPerson(person);
     return this.gameCounts.get(person);
   }
 
