@@ -21,6 +21,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<String, Integer> gameCounts;
 
   private Map<String, Integer> highestScore;
+
+  private Map<String, Integer> totalScores;
   // For some waves you will need to add more private instance variables here!
 
 
@@ -28,12 +30,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
     highestScore = new HashMap<>();
+    totalScores = new HashMap<>();
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
       // TODO: add logic here to use the name and score to fill your map(s)!
-
+      //game count
       if(!gameCounts.containsKey(name)) {
         gameCounts.put(name, 1);
       }
@@ -43,14 +46,21 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         gameCounts.put(name, oldCount + 1);
       }
 
-      
-      if(highestScore.containsKey(name)){
+      //highest score
+      if(!highestScore.containsKey(name)){
         if(score > highestScore.get(name)) {
           highestScore.put(name, score);
         }
       }
       else {
         highestScore.put(name, score);
+      }
+      //total scores 
+      if(!totalScores.containsKey(name)) {
+        totalScores.put(name, score);
+      }
+      else {
+        totalScores.put(name, totalScores.get(name) + score);
       }
 
     }
@@ -126,11 +136,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public double getAverageScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
+    checkPerson(person);
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+
+
+
   }
 
   /**
