@@ -48,13 +48,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
       //highest score
       if(!highestScore.containsKey(name)){
-        if(score > highestScore.get(name)) {
           highestScore.put(name, score);
         }
-      }
-      else {
-        highestScore.put(name, score);
-      }
+        else if(score > highestScore.get(name)) {
+          highestScore.put(name, score);
+        }
       //total scores 
       if(!totalScores.containsKey(name)) {
         totalScores.put(name, score);
@@ -138,7 +136,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public double getAverageScore(String person) {
     checkPerson(person);
 
-
+    return (double) totalScores.get(person) / gameCounts.get(person);
 
 
   }
