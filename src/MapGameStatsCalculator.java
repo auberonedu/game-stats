@@ -32,7 +32,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       int score = scoreInput.nextInt();
       this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
     }
-    
+
     System.out.println(this.gameCounts);
   }
 
@@ -45,11 +45,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int gameCount(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    return this.gameCounts.get(person);
   }
 
   /**
