@@ -25,14 +25,15 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
 
   public MapGameStatsCalculator(Scanner scoreInput) {
-    gameCounts = new HashMap<>();
+    this.gameCounts = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
-
-      // TODO: add logic here to use the name and score to fill your map(s)!
+      this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
     }
+    
+    System.out.println(this.gameCounts);
   }
 
   /**
@@ -147,7 +148,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     if(person == null) {
       throw new NullPointerException("Cannot query for null person");
     }
-    if(!gameCounts.containsKey(person)) {
+    if(!this.gameCounts.containsKey(person)) {
       throw new NoSuchElementException("Person " + person + " does not exist in the score data");
     }
   }
@@ -158,7 +159,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * @throws NoSuchElementException if there is no score data
    */
   private void checkScoreData() {
-    if(gameCounts.isEmpty()) {
+    if(this.gameCounts.isEmpty()) {
       throw new NoSuchElementException("No score data parsed");
     }
   }
