@@ -27,7 +27,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
-
+    highestScore = new HashMap<>();
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
@@ -43,7 +43,16 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         gameCounts.put(name, oldCount + 1);
       }
 
-    
+      
+      if(highestScore.containsKey(name)){
+        if(score > highestScore.get(name)) {
+          highestScore.put(name, score);
+        }
+      }
+      else {
+        highestScore.put(name, score);
+      }
+
     }
   }
 
