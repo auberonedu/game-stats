@@ -30,7 +30,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
-
+      if(gameCounts.containsKey(name))
+      {
+        gameCounts.put(name, gameCounts.get(name)+1);
+      }else {
+        gameCounts.put(name, 1); 
+      }
       // TODO: add logic here to use the name and score to fill your map(s)!
     }
   }
@@ -45,10 +50,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public int gameCount(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
+    //throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
+    checkPerson(person);
+
+    
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    
   }
 
   /**
