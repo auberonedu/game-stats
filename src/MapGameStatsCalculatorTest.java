@@ -33,6 +33,46 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void gameCountReturnsNumberOfGamesForPersonTwo() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Xinting");
+
+    // Assert
+    assertEquals(1, actual);
+  }
+
+  @Test
+  public void gameCountReturnsNumberOfGamesForPersonNone() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Baya");
+
+    // Assert
+    assertEquals(3, actual);
+  }
+
+  @Test
   public void gameCountThrowsNullPointerExceptionForNullPerson() {
     // Arrange
     String scoreData = "Nupur 10\n"
@@ -157,6 +197,26 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void highestScorerReturnsEqualScoresWithHighestScore() {
+    // Arrange
+    String scoreData = "Ashley 30\n"
+        + "Abigail 30\n"
+        + "Bex 30\n"
+        + "Bella 30\n"
+        + "Bree 30\n"
+        + "Cici 30\n"
+        + "Dustin 30\n"
+        + "Evan 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Abigail", actual);
+  }
+
+  @Test
   public void highestScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
     // Arrange
     String scoreData = "";
@@ -189,6 +249,25 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(25.0, actual, 0.001);
+  }
+
+  @Test
+  public void getAverageScoreReturnsAverageScoreForPersonTwo() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Baya 50\n"
+        + "Nupur 10\n"
+        + "Baya 60\n"
+        + "Nupur 10\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    double actual = calculator.getAverageScore("Nupur");
+
+    // Assert
+    assertEquals(10, actual, 0.001);
   }
 
   @Test
