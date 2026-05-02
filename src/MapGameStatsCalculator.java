@@ -23,6 +23,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<String, Integer> highestScore;
 
   private Map<String, Integer> totalScores;
+
   // For some waves you will need to add more private instance variables here!
 
 
@@ -156,6 +157,22 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
     String bestPerson = "";
     double bestAverage = 0;
+
+    for(String name : totalScores.keySet()) {
+        double average = getAverageScore(name);
+
+        if(average > bestAverage) {
+          bestPerson = name;
+          bestAverage = average;
+        }
+
+
+        else if (average == bestAverage && name.compareTo(bestPerson) < 0) {
+            bestPerson = name;
+        }
+    }
+
+    return bestPerson;
   }
 
   /**
