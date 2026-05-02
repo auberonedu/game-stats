@@ -234,7 +234,7 @@ public class MapGameStatsCalculatorTest {
   // highestAverageScorer tests
 
   @Test
-  public void highestAverageScorerReturnsPersonWithHighestAverageScore() {
+    public void highestAverageScorerReturnsPersonWithHighestAverageScore() {
     // Arrange
     String scoreData = "Nupur 10\n"
         + "Baya 30\n"
