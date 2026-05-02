@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,6 +199,10 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public List<Integer> sortedScores(String person) {
     checkPerson(person);
 
+
+    List<Integer> scores = allScores.get(person);
+    Collections.sort(scores);
+    return scores;
   }
 
   /**
