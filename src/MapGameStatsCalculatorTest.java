@@ -13,7 +13,7 @@ public class MapGameStatsCalculatorTest {
   // gameCount tests
 
   @Test
-  public void gameCountReturnsNumberOfGamesForPerson() {
+  public void gameCountReturnsNumberOfGamesForPersonNupur() {
     // Arrange
     String scoreData = "Nupur 10\n"
         + "Baya 30\n"
@@ -72,10 +72,73 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  //Custom tests for gameCount()
+  
+  //Can't figure this out
+  /*
+  @Test
+  public void gameCountCustomTestEmptyString()
+  {
+    String scoreData = "Nupur\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    Executable act = () -> calculator.gameCount("");
+
+    assertThrows(NoSuchElementException.class, act);
+  }
+  */
   // highScore tests
 
   @Test
-  public void highScoreReturnsHighestScoreForPerson() {
+  public void gameCountReturnsNumberOfGamesForPersonXinting() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Xinting");
+
+    // Assert
+    assertEquals(1, actual);
+  }
+
+  @Test
+  public void gameCountReturnsNumberOfGamesForPersonBaya() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Baya");
+
+    // Assert
+    assertEquals(3, actual);
+  }
+
+  @Test
+  public void highScoreReturnsHighestScoreForPersonNupur() {
     // Arrange
     String scoreData = "Nupur 10\n"
         + "Baya 30\n"
@@ -134,6 +197,48 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  //Custom tests for highScore()
+
+  @Test
+  public void highScoreReturnsHighestScoreForPersonXinting() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.highScore("Xinting");
+
+    // Assert
+    assertEquals(25, actual);
+  }
+
+  @Test
+  public void highScoreAllScoresSetToZero() {
+    // Arrange
+    String scoreData = "Nupur 0\n"
+        + "Baya 0\n"
+        + "Xinting 0\n"
+        + "Nupur 0\n"
+        + "Baya 0\n"
+        + "Nupur 0\n"
+        + "Baya 0\n"
+        + "Nupur 0\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.highScore("Baya");
+
+    // Assert
+    assertEquals(0, actual);
+  }
+
   // highestScorer tests
 
   @Test
@@ -167,6 +272,28 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertThrows(NoSuchElementException.class, act);
+  }
+
+  //Custom tests for highestScorer()
+
+  @Test
+  public void highestScorerReturnsPersonWhenHighScoresTiedInAlphabeticalOrder(){
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 60\n"
+        + "Baya 50\n"
+        + "Nupur 20\n"
+        + "Baya 60\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
   }
 
   // getAverageScore tests
@@ -264,6 +391,26 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertThrows(NoSuchElementException.class, act);
+  }
+
+  //Custom tests for highestAverageScorer()
+
+  @Test
+  public void highestAverageScorerTiedScoresReturnsAlphabeticalOrder() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 10\n"
+        + "Nupur 40\n"
+        + "Baya 40\n"
+        + "Nupur 20\n"
+        + "Baya 20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestAverageScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
   }
 
   // sortedScores tests
