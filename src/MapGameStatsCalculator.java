@@ -20,6 +20,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   private Map<String, Integer> gameCounts;
   private Map<String, Integer> gameHighScores;
+  private Map<String, Integer> gameAverageScores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -28,15 +29,23 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public MapGameStatsCalculator(Scanner scoreInput) {
     this.gameCounts = new HashMap<>();
     this.gameHighScores = new HashMap<>();
+    this.gameAverageScores = new HashMap<>();
+
+    HashMap<String, Integer> gameTotalScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
       this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
+      gameTotalScores.put(name, gameTotalScores.getOrDefault(name, 0) + score);
+
       //May seem redundant but the first case allows negative scores to exist.
       if ((! this.gameHighScores.containsKey(name)) || (score > this.gameHighScores.getOrDefault(name, 0))) {
         this.gameHighScores.put(name, score);
       }
+
+      Integer newAverageScore = gameTotalScores.get(name) / this.gameCounts.get(name);
+      this.gameAverageScores.put(name, newAverageScore);
     }
   }
 
