@@ -329,6 +329,27 @@ public void gameCountReturnsNumberOfGamesForOnePersonOnly() {
   }
 
   @Test
+  public void highestAverageScorerReturnsFirstNameAlphabeticallyIfTied() {
+    // Arrange
+    String scoreData = "Nupur 10\n"
+        + "Baya 10\n"
+        + "Xinting 25\n"
+        + "Nupur 40\n"
+        + "Baya 40\n"
+        + "Nupur 20\n"
+        + "Baya 20\n"
+        + "Baya 30\n"
+        + "Nupur 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestAverageScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
+  }
+
+  @Test
   public void highestAverageScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
     // Arrange
     String scoreData = "";
