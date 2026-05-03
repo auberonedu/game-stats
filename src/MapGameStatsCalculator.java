@@ -34,7 +34,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       int score = scoreInput.nextInt();
       this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
       //May seem redundant but the first case allows negative scores to exist.
-      if (! this.gameHighScores.containsKey(name) || score > this.gameCounts.getOrDefault(name, 0)) {
+      if ((! this.gameHighScores.containsKey(name)) || (score > this.gameHighScores.getOrDefault(name, 0))) {
         this.gameHighScores.put(name, score);
       }
     }
@@ -63,7 +63,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public int highScore(String person) {
     this.checkPerson(person);
-    
+    return this.gameHighScores.get(person);
   }
 
   /**
