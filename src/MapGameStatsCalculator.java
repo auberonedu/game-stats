@@ -19,19 +19,33 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
+  private Map<String, Integer> gameHighScores;
+  private Map<String, Double> gameAverageScores;
 
   // For some waves you will need to add more private instance variables here!
 
 
 
   public MapGameStatsCalculator(Scanner scoreInput) {
-    gameCounts = new HashMap<>();
+    this.gameCounts = new HashMap<>();
+    this.gameHighScores = new HashMap<>();
+    this.gameAverageScores = new HashMap<>();
+
+    HashMap<String, Integer> gameTotalScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
+      this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
+      gameTotalScores.put(name, gameTotalScores.getOrDefault(name, 0) + score);
 
-      // TODO: add logic here to use the name and score to fill your map(s)!
+      //May seem redundant but the first case allows negative scores to exist.
+      if ((! this.gameHighScores.containsKey(name)) || (score > this.gameHighScores.getOrDefault(name, 0))) {
+        this.gameHighScores.put(name, score);
+      }
+
+      Double newAverageScore = gameTotalScores.get(name).doubleValue() / this.gameCounts.get(name);
+      this.gameAverageScores.put(name, newAverageScore);
     }
   }
 
@@ -44,11 +58,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int gameCount(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    this.checkPerson(person);
+    return this.gameCounts.get(person);
   }
 
   /**
@@ -60,11 +71,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int highScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highScore'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    this.checkPerson(person);
+    return this.gameHighScores.get(person);
   }
 
   /**
@@ -78,11 +86,19 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    this.checkScoreData();
+    //Initialize highest score with the 'first' map entry
+    Map.Entry<String, Integer> highestScoreEntry = this.gameHighScores.entrySet().iterator().next();
+    for (Map.Entry<String, Integer> entry : this.gameHighScores.entrySet()) {
+      if (entry.getValue() > highestScoreEntry.getValue()){
+        highestScoreEntry = entry;
+      } else if (entry.getValue().equals(highestScoreEntry.getValue())) {
+        if (entry.getKey().compareTo(highestScoreEntry.getKey()) < 0) {
+          highestScoreEntry = entry;
+        }
+      }
+    }
+    return highestScoreEntry.getKey();
   }
 
   /**
@@ -94,11 +110,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public double getAverageScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    this.checkPerson(person);
+    return this.gameAverageScores.get(person);
   }
 
   /**
@@ -112,11 +125,20 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestAverageScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    this.checkScoreData();
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    Map.Entry<String, Double> highestAverageScoreEntry = this.gameAverageScores.entrySet().iterator().next();
+    for (Map.Entry<String, Double> entry : this.gameAverageScores.entrySet()) {
+      if (entry.getValue() > highestAverageScoreEntry.getValue()){
+        highestAverageScoreEntry = entry;
+      } else if (entry.getValue().equals(highestAverageScoreEntry.getValue())) {
+        if (entry.getKey().compareTo(highestAverageScoreEntry.getKey()) < 0) {
+          highestAverageScoreEntry = entry;
+        }
+      }
+    }
+    return highestAverageScoreEntry.getKey();
+
   }
 
   /**
@@ -147,7 +169,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     if(person == null) {
       throw new NullPointerException("Cannot query for null person");
     }
-    if(!gameCounts.containsKey(person)) {
+    if(!this.gameCounts.containsKey(person)) {
       throw new NoSuchElementException("Person " + person + " does not exist in the score data");
     }
   }
@@ -158,7 +180,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * @throws NoSuchElementException if there is no score data
    */
   private void checkScoreData() {
-    if(gameCounts.isEmpty()) {
+    if(this.gameCounts.isEmpty()) {
       throw new NoSuchElementException("No score data parsed");
     }
   }
