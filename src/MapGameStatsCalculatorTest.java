@@ -287,6 +287,25 @@ public void gameCountReturnsNumberOfGamesForOnePersonOnly() {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test
+  public void getAverageScoreReturnsNegativeValueForNegativeAverageScore() {
+    // Arrange
+    String scoreData = "Nupur -10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur 10\n"
+        + "Baya 50\n"
+        + "Nupur -3\n"
+        + "Baya 60\n"
+        + "Nupur -15\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    double actual = calculator.getAverageScore("Nupur");
+
+    assertEquals(-4.5, actual);
+  }
+
   // highestAverageScorer tests
 
   @Test
