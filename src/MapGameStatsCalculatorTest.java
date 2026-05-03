@@ -151,6 +151,26 @@ public void gameCountReturnsNumberOfGamesForOnePersonOnly() {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test
+  public void highestScoreReturnsNegativeValueForPersonWithNegativeScore() {
+    // Arrange
+    String scoreData = "Nupur -10\n"
+        + "Baya 30\n"
+        + "Xinting 25\n"
+        + "Nupur -40\n"
+        + "Baya 50\n"
+        + "Nupur -20\n"
+        + "Baya 60\n"
+        + "Nupur -45\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int act = calculator.highScore("Nupur");
+
+    // Assert
+    assertEquals(-10, act);
+  }
+
   // highestScorer tests
 
   @Test
