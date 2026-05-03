@@ -20,7 +20,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   private Map<String, Integer> gameCounts;
   private Map<String, Integer> gameHighScores;
-  private Map<String, Integer> gameAverageScores;
+  private Map<String, Double> gameAverageScores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -44,7 +44,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         this.gameHighScores.put(name, score);
       }
 
-      Integer newAverageScore = gameTotalScores.get(name) / this.gameCounts.get(name);
+      Double newAverageScore = gameTotalScores.get(name).doubleValue() / this.gameCounts.get(name);
       this.gameAverageScores.put(name, newAverageScore);
     }
   }
