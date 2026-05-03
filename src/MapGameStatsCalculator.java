@@ -19,6 +19,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
+  private Map<String, Integer> gameScores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -26,14 +27,14 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     this.gameCounts = new HashMap<>();
+    this.gameScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
       this.gameCounts.put(name, this.gameCounts.getOrDefault(name, 0)+1);
+      this.gameScores.put(name, score);
     }
-
-    System.out.println(this.gameCounts);
   }
 
   /**
