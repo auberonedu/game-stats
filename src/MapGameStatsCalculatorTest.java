@@ -72,6 +72,23 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+
+@Test
+public void gameCountReturnsNumberOfGamesForOnePersonOnly() {
+    // Arrange
+    String scoreData = "Baya 30\n"
+        + "Baya 50\n"
+        + "Baya 60\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Baya");
+
+    // Assert
+    assertEquals(3, actual);
+
+}
+
   // highScore tests
 
   @Test
