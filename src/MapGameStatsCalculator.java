@@ -127,7 +127,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestAverageScorer() {
     checkScoreData();
-    double averageScore = 0; 
+    double averageScore = 1 - Double.MAX_VALUE; 
     String highestAverageScorer = ""; 
 
     for (String person : totalScores.keySet()) {

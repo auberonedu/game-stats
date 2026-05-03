@@ -305,7 +305,39 @@ public class MapGameStatsCalculatorTest {
     assertEquals("Baya", actual);
   }
 
-  
+  @Test
+  public void highestAverageScorerSingeInput() {
+    // Arrange
+    String scoreData = "Nupur 30\n"; 
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    
+    // Act
+    String actual = calculator.highestAverageScorer(); 
+
+    // Assert
+    assertEquals("Nupur", actual); 
+  }
+
+  @Test
+  public void highestAverageScorerNegativeScoreValues() {
+    // Arrange
+    String scoreData = "Nupur -10\n"
+        + "Baya -30\n"
+        + "Xinting -25\n"
+        + "Nupur -40\n"
+        + "Baya -50\n"
+        + "Nupur -20\n"
+        + "Baya -60\n"
+        + "Nupur -30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestAverageScorer(); 
+
+    // Assert
+    assertEquals("Nupur", actual); 
+  }
 
   @Test
   public void highestAverageScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
