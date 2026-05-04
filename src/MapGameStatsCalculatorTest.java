@@ -300,6 +300,16 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test
+  public void averageNegative() {
+    String data = "Nupur -10\n"
+        + "Nupur 10\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(data));
+
+    assertEquals(0.0, calculator.getAverageScore("Nupur"));
+  }
+
   // highestAverageScorer tests
 
   @Test
