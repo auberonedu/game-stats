@@ -93,6 +93,24 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestScorer() {
     checkScoreData();
+    String bestPerson = null;
+    int bestScore = Integer.MIN_VALUE;
+
+    for (String name : highScores.keySet()) {
+      int score = highScores.get(name);
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestPerson = name;
+      } 
+      else if (score == bestScore) {
+        if (name.compareTo(bestPerson) < 0) {
+            bestPerson = name;
+        }
+      }
+    }
+
+    return bestPerson;
   }
 
   /**
