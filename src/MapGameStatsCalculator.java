@@ -110,7 +110,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     // throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
     checkScoreData();
     String scorer = " ";
-    int currentHighest = 0;
+    int currentHighest = Integer.MIN_VALUE;
     for(String name: highScores.keySet()){
         if(highScores.get(name) > currentHighest ){
           currentHighest = highScores.get(name);
@@ -154,10 +154,21 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestAverageScorer() {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
-
+    //throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    checkScoreData();
+    String person = " ";
+    double highestAverage = Double.MIN_VALUE;
+    for(String name : totalScores.keySet()){
+      if(getAverageScore(name) > highestAverage){
+        person = name;
+        highestAverage = getAverageScore(person);
+      }
+      if (getAverageScore(name) == highestAverage && name.compareTo(person) <= 0) {
+          person = name;
+        }
+    }
+    return person;
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
   }
 
   /**
