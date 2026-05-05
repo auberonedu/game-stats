@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,10 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
+  private Map<String, Integer> highScores;
+  private Map<String, Integer> totalScores;
+  private Map<String, List<Integer>> allScores; 
+  private List<Integer> scores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -26,12 +32,42 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
+    highScores = new HashMap<>();
+    totalScores = new HashMap<>();
+    allScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
       // TODO: add logic here to use the name and score to fill your map(s)!
+
+      if(gameCounts.containsKey(name)){
+        gameCounts.put(name, gameCounts.get(name) + 1);
+      }
+      else{
+        gameCounts.put(name, 1);
+      }
+
+      if(!highScores.containsKey(name) || highScores.get(name) < score){
+        highScores.put(name, score);
+      }
+
+      if(totalScores.containsKey(name)){
+        totalScores.replace(name, totalScores.get(name) + score);
+      }
+      else{
+        totalScores.put(name, score);
+      }
+
+      if(allScores.containsKey(name)){
+        allScores.get(name).add(score);
+      }
+      else{
+        scores = new ArrayList<>();
+        scores.add(score);
+        allScores.put(name, scores);
+      }
     }
   }
 
@@ -45,10 +81,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public int gameCount(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
-
+    // throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
+    checkPerson(person);
+     
+     
+     return gameCounts.get(person);
+    
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
   }
 
   /**
@@ -60,11 +99,14 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int highScore(String person) {
+    
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highScore'");
+    //throw new UnsupportedOperationException("Unimplemented method 'highScore'");
+    checkPerson(person);
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    
+    return highScores.get(person);
   }
 
   /**
@@ -79,10 +121,22 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestScorer() {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
-
+    // throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
+    checkScoreData();
+    String scorer = " ";
+    int currentHighest = Integer.MIN_VALUE;
+    for(String name: highScores.keySet()){
+        if(highScores.get(name) > currentHighest ){
+          currentHighest = highScores.get(name);
+          scorer = name; 
+        }
+        if (highScores.get(name) == currentHighest && name.compareTo(scorer) <= 0) {
+          scorer = name;
+        }
+    }
+    return scorer;
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    
   }
 
   /**
@@ -95,10 +149,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public double getAverageScore(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
+    //throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
+    checkPerson(person);
 
+    return 1.0*totalScores.get(person)/ gameCount(person);
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
   }
 
   /**
@@ -113,10 +168,21 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestAverageScorer() {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
-
+    //throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    checkScoreData();
+    String person = " ";
+    double highestAverage = Double.MIN_VALUE;
+    for(String name : totalScores.keySet()){
+      if(getAverageScore(name) > highestAverage){
+        person = name;
+        highestAverage = getAverageScore(person);
+      }
+      if (getAverageScore(name) == highestAverage && name.compareTo(person) <= 0) {
+          person = name;
+        }
+    }
+    return person;
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
   }
 
   /**
@@ -129,10 +195,15 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public List<Integer> sortedScores(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'sortedScores'");
+    // throw new UnsupportedOperationException("Unimplemented method 'sortedScores'");
+      checkPerson(person);
 
+      List<Integer> toSort = allScores.get(person);
+
+      Collections.sort(toSort);
+      return toSort;
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    
   }
   
   /**
@@ -147,7 +218,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     if(person == null) {
       throw new NullPointerException("Cannot query for null person");
     }
-    if(!gameCounts.containsKey(person)) {
+    if(!gameCounts.containsKey(person) || !highScores.containsKey(person)) {
       throw new NoSuchElementException("Person " + person + " does not exist in the score data");
     }
   }
