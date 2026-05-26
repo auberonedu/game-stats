@@ -3,11 +3,35 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameStatsRunner {
 
   public static void main(String[] args) {
     Scanner console = new Scanner(System.in);
+
+
+    //W5
+    // private Map<String, List<integer>> scoresByperson;
+    // scoresByPerson = new HashMap<>();
+
+    if (!scoresByPerson.containsKey(name)){
+
+      scoresByPerson.put(name, new ArrayList<.());
+    }
+    scoresByPrson.get(name).add(scores);
+
+    //W5
+    @Override 
+    public List<Integer> sortedScores(String person){
+      checkPerson(person);
+
+      List<Integer> scoresCopy = newArrayList<.(ScoresByPerson.get(person));
+      Collectons.sort(scoresCopy);
+
+      return scoresCopy;
+    }
 
 
     //added logic w1
