@@ -9,6 +9,23 @@ public class GameStatsRunner {
   public static void main(String[] args) {
     Scanner console = new Scanner(System.in);
 
+
+    //added logic w1
+    if (!gameCounts.containsKey(name)){
+      gameCounts.put(name, 0);
+    }
+    gameCounts/put(name, gameCounts.get(name) + 1);
+
+    //oberride W1
+    @Override 
+    public int gameCount(String person){
+      checkPerson(person);
+      return gameCounts.get(person);
+    }
+
+
+
+
     // Ask for filenames until we successfully create a calculator.
     GameStatsCalculator calculator = makeCalculator(console);
 
