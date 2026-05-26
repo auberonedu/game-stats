@@ -37,6 +37,27 @@ if (!highScores.containsKey(name) || scores > highScores.get(name)){
 }
 
 
+//w3
+@Override 
+public String highestScore(){
+  checkScoreData();
+
+  String bestPerson = null;
+  int bestScore = Integer.MIN_VALUE;
+  for (String person : highScores.keySet()) {
+    int score = highScores.get(person);
+
+    if (bestPerson == null ||
+      score > bestScore ||
+      score == bestScore && person.compareTo(bestPerson) < 0){
+        bestPerson = person;
+        bestScore = score;
+      }
+  }
+  return bestPerson;
+
+
+
 
     // Ask for filenames until we successfully create a calculator.
     GameStatsCalculator calculator = makeCalculator(console);
