@@ -19,6 +19,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
+  private Map<String, Integer> gameScores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -26,20 +27,35 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
+    gameScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
-      if (!gameCounts.containsKey(name)) {
-        gameCounts.put(name, 1);
+      if(score > 0){
+        if(!gameScores.containsKey(name)){
+          gameScores.put(name, score);
+        }
+        else if(score <= gameScores.get(name)){
+        } else{
+          gameScores.put(name, score);
+        }
       }
-      else {
-        int currentCount = gameCounts.get(name);
-        int newCount = currentCount + 1;
-        gameCounts.put(name, newCount);
+
+        if (!gameCounts.containsKey(name)) {
+          gameCounts.put(name, 1);
       }
+        else {
+          int currentCount = gameCounts.get(name);
+          int newCount = currentCount + 1;
+          gameCounts.put(name, newCount);
+        }
     }
+
+    
+
+
   }
 
   /**
@@ -70,10 +86,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public int highScore(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highScore'");
+    //throw new UnsupportedOperationException("Unimplemented method 'highScore'");
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+
+    return gameScores.get(person);
   }
 
   /**
@@ -88,10 +106,10 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestScorer() {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
+    //throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    checkScoreData();
   }
 
   /**
