@@ -110,7 +110,17 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
     checkScoreData();
+    
+    String champ = null;
+    int champscore = 0;
+    for (String key : gameScores.keySet()) {
+      if(gameScores.get(key) > champscore){
+        champ = key;
+        champscore = gameScores.get(key);
+      }
   }
+  return champ;
+}
 
   /**
    * Returns the average score a person has gotten.
