@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
-      // TODO: add logic here to use the name and score to fill your map(s)!
+      gameCounts.put(name, gameCounts.getOrDefault(name, 0) + 1);
     }
   }
 
@@ -44,11 +46,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int gameCount(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+    return gameCounts.get(person);
   }
 
   /**
