@@ -22,14 +22,15 @@ public class MapGameStatsCalculatorTest {
         + "Baya 50\n"
         + "Nupur 20\n"
         + "Baya 60\n"
+        + "Xinting -5\n"
         + "Nupur 30\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
     // Act
-    int actual = calculator.gameCount("Nupur");
+    int actual = calculator.gameCount("Xinting");
 
     // Assert
-    assertEquals(4, actual);
+    assertEquals(2, actual);
   }
 
   @Test
@@ -80,7 +81,7 @@ public class MapGameStatsCalculatorTest {
     String scoreData = "Nupur 10\n"
         + "Baya 30\n"
         + "Xinting 25\n"
-        + "Nupur 40\n"
+        + "Nupur -5\n"
         + "Baya 50\n"
         + "Nupur 20\n"
         + "Baya 60\n"
@@ -91,7 +92,7 @@ public class MapGameStatsCalculatorTest {
     int actual = calculator.highScore("Nupur");
 
     // Assert
-    assertEquals(40, actual);
+    assertEquals(30, actual);
   }
 
   @Test
