@@ -20,6 +20,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   private Map<String, Integer> gameCounts;
   private Map<String, Integer> gameScores;
+  private Map<String, Integer> highScores;
+  private Map<String, Integer> totalScores;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -28,20 +30,32 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
     gameScores = new HashMap<>();
+    highScores = new HashMap<>();
+    totalScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
+      gameScores.put(name, score);
+
+      if (!totalScores.containsKey(name)) {
+        totalScores.put(name, score);
+      } else{
+        totalScores.put(name, totalScores.get(name) + score);
+      }
+      
+
       if(score > 0){
-        if(!gameScores.containsKey(name)){
-          gameScores.put(name, score);
+        if(!highScores.containsKey(name)){
+          highScores.put(name, score);
         }
-        else if(score <= gameScores.get(name)){
+        else if(score <= highScores.get(name)){
         } else{
-          gameScores.put(name, score);
+          highScores.put(name, score);
         }
       }
+
 
         if (!gameCounts.containsKey(name)) {
           gameCounts.put(name, 1);
@@ -91,7 +105,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
     checkPerson(person);
 
-    return gameScores.get(person);
+    return highScores.get(person);
   }
 
   /**
@@ -113,10 +127,10 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     
     String champ = null;
     int champscore = 0;
-    for (String key : gameScores.keySet()) {
-      if(gameScores.get(key) > champscore){
+    for (String key : highScores.keySet()) {
+      if(highScores.get(key) > champscore){
         champ = key;
-        champscore = gameScores.get(key);
+        champscore = highScores.get(key);
       }
   }
   return champ;
@@ -131,11 +145,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public double getAverageScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
+    //TODO: remove this exception once you have implemented your method!
+    //throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+    return (totalScores.get(person) / gameCount(person));
   }
 
   /**
