@@ -367,4 +367,19 @@ public void getAverageScoreReturnsDecimalAverage() {
   // Assert
   assertEquals(12.5, actual, 0.001);
 }
+@Test
+public void highestAverageScorerReturnsAlphabeticallyFirstPersonWhenTied() {
+  // Arrange
+  String scoreData = "Xinting 30\n"
+      + "Baya 20\n"
+      + "Baya 40\n"
+      + "Nupur 10\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  String actual = calculator.highestAverageScorer();
+
+  // Assert
+  assertEquals("Baya", actual);
+}
 }
