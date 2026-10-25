@@ -354,4 +354,17 @@ public void highestScorerReturnsAlphabeticallyWhenTied() {
   // Assert
   assertEquals("Baya", actual);
 }
+@Test
+public void getAverageScoreReturnsDecimalAverage() {
+  // Arrange
+  String scoreData = "Nupur 10\n"
+      + "Nupur 15\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  double actual = calculator.getAverageScore("Nupur");
+
+  // Assert
+  assertEquals(12.5, actual, 0.001);
+}
 }
