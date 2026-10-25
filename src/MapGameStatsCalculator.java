@@ -157,11 +157,12 @@ checkScoreData();
    */
   @Override
   public List<Integer> sortedScores(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'sortedScores'");
+checkPerson(person);
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+  List<Integer> sorted = new ArrayList<>(gameScores.get(person));
+  Collections.sort(sorted);
+
+  return sorted;
   }
   
   /**

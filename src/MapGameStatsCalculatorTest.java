@@ -382,4 +382,20 @@ public void highestAverageScorerReturnsAlphabeticallyFirstPersonWhenTied() {
   // Assert
   assertEquals("Baya", actual);
 }
+@Test
+public void sortedScoresDoesNotChangeOtherResults() {
+  // Arrange
+  String scoreData = "Nupur 30\n"
+      + "Nupur 10\n"
+      + "Nupur 20\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  List<Integer> first = calculator.sortedScores("Nupur");
+  first.add(999);
+  List<Integer> second = calculator.sortedScores("Nupur");
+
+  // Assert
+  assertEquals(List.of(10, 20, 30), second);
+}
 }
