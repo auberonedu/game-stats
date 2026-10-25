@@ -327,6 +327,31 @@ public class MapGameStatsCalculatorTest {
     // Assert
     assertThrows(NoSuchElementException.class, act);
   }
+@Test
+public void highScoreReturnsLaterScoreWhenPersonHasMultipleGames() {
+  // Arrange
+  String scoreData = "Nupur 10\n"
+      + "Nupur 40\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
-  // Add more tests here!
+  // Act
+  int actual = calculator.highScore("Nupur");
+
+  // Assert
+  assertEquals(40, actual);
+}
+@Test
+public void highestScorerReturnsAlphabeticallyWhenTied() {
+  // Arrange
+  String scoreData = "Xinting 50\n"
+      + "Baya 50\n"
+      + "Nupur 20\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  String actual = calculator.highestScorer();
+
+  // Assert
+  assertEquals("Baya", actual);
+}
 }

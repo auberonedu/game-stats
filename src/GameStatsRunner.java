@@ -14,7 +14,6 @@ public class GameStatsRunner {
 
     // Keep asking the user what they want to do until they choose to exit.
     boolean keepGoing = true;
-
     while (keepGoing) {
       printMenu();
 
