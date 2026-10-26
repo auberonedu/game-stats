@@ -72,7 +72,58 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test 
+  public void gameCountWorksWithOnlyOnePerson() {
+    // Arrange
+    String scoreData = "Mia 5 \n" + "Mia 15 \n" + "Mia 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    // Act
+    int actual = calculator.gameCount("Mia");
+
+    // Assert
+    assertEquals(3, actual);
+  }
+
+  @Test 
+  public void gameCountIncludesNegativeScores() {
+    // Arranges
+    String scoreData = "Leo -10 \n" + "Ana 5\n" + "Leo -20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Leo");
+
+    // Assert
+    assertEquals(2, actual);
+  }
+
+
   // highScore tests
+  @Test 
+  public void highScoreReturnsHighestWhenAllScoresNegative() {
+    // Arrange
+    String scoreData = "Leo -10\n" + "Leo -3\n" + "Leo -7\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act 
+    int actual = calculator.highScore("Leo");
+
+    // Assert
+    assertEquals(-3, actual);
+  }
+
+  @Test 
+  public void highScoreFindsHighestInLastGame() {
+    // Arranges
+    String scoreData = "Mia 5\n" + "Mia 12\n" + "Mia 40\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act 
+    int actual = calculator.highScore("Mia");
+
+    // Assert
+    assertEquals(40, actual);
+  }
 
   @Test
   public void highScoreReturnsHighestScoreForPerson() {
@@ -135,6 +186,31 @@ public class MapGameStatsCalculatorTest {
   }
 
   // highestScorer tests
+  @Test 
+  public void highestScorerWorksWhenAllScoresNegative() {
+    // Arrange
+    String scoreData = "Leo -10\n" + "Ana -3\n" + "Mia -7\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Ana", actual);
+  }
+
+  @Test 
+  public void highestScorerWorksWithOnlyOnePerson() {
+    // Arrange
+    String scoreData = "Mia 5\n" + "Mia 15\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Mia", actual);
+  }
 
   @Test
   public void highestScorerReturnsPersonWithHighestScore() {
@@ -231,6 +307,33 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test 
+  public void getAverageScoreWorksWithNegativeScores() {
+     // Arrange
+    String scoreData = "Leo -4\n" + "Leo 10\n" + "Leo -3\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    double actual = calculator.getAverageScore("Leo");
+
+    // Assert
+    assertEquals(1.0, actual, 0.001);
+  }
+
+  @Test 
+  public void getAverageScoreReturnsDecimalAverage() {
+     // Arrange
+    String scoreData = "Mia 10\n" + "Mia 15\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    double actual = calculator.getAverageScore("Mia");
+
+    // Assert
+    assertEquals(12.5, actual, 0.001);
+  }
+
+
   // highestAverageScorer tests
 
   @Test
@@ -265,6 +368,33 @@ public class MapGameStatsCalculatorTest {
     // Assert
     assertThrows(NoSuchElementException.class, act);
   }
+
+  @Test 
+  public void highestAverageScorerIsNotJustHighestSingleScore() {
+     // Arrange
+    String scoreData = "Ana 100\n" + "Ana  0\n" + "Leo 60\n" + "Leo 60\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    String actual = calculator.highestAverageScorer();
+
+    // Assert
+    assertEquals("Leo", actual);
+  }
+
+  @Test 
+  public void highestAverageScorerWorksWhenAllScoresNegative() {
+     // Arrange
+    String scoreData = "Ana -10\n" + "Ana  -20\n" + "Leo -1\n" + "Leo -3\n";
+     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+     // Act
+    String actual = calculator.highestAverageScorer();
+
+    // Assert
+    assertEquals("Leo", actual);
+  }
+
 
   // sortedScores tests
 
