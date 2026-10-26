@@ -9,8 +9,93 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 public class MapGameStatsCalculatorTest {
+  @Test
+  public void highestAverageScorerWithDifferentGameCounts() {
+    String scoreData = "Elham 40\nElham 40\nSara 60\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
-  // gameCount tests
+    assertEquals("Sara", calculator.highestAverageScorer());
+  }
+
+  @Test
+  public void highestAverageScorerBreaksNegativeTieAlphabetically() {
+    String scoreData = "Zara -10\nAdam -5\nAdam -15\nMila -20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals("Adam", calculator.highestAverageScorer());
+  }
+
+  @Test
+  public void averageScoreKeepsDecimalPart() {
+    String scoreData = "Elham 10\nElham 11\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(10.5, calculator.getAverageScore("Elham"), 0.0001);
+  }
+
+  @Test
+  public void averageScoreWithNegativeScores() {
+    String scoreData = "Elham -10\nElham -5\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(-7.5, calculator.getAverageScore("Elham"), 0.0001);
+  }
+
+  @Test
+  public void highestScorerWithOnePerson() {
+    String scoreData = "Elham 15\nElham 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals("Elham", calculator.highestScorer());
+  }
+
+  @Test
+  public void highestScorerWithNegativeScores() {
+    String scoreData = "Elham -10\nSara -5\nElham -20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals("Sara", calculator.highestScorer());
+  }
+
+  @Test
+  public void highestScorerBreaksTieAlphabetically() {
+    String scoreData = "Zara 50\nAdam 50\nMila 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals("Adam", calculator.highestScorer());
+  }
+
+  @Test
+  public void highScoreWithOneGame() {
+    String scoreData = "Elham 15\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(15, calculator.highScore("Elham"));
+  }
+
+  @Test
+  public void highScoreWithOnlyNegativeScores() {
+    String scoreData = "Elham -10\nElham -5\nElham -20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(-5, calculator.highScore("Elham"));
+  }
+
+  @Test
+  public void gameCountWithOneGame() {
+    String scoreData = "Elham 15\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(1, calculator.gameCount("Elham"));
+  }
+
+  @Test
+  public void gameCountIncludesNegativeScores() {
+    String scoreData = "Elham -10\nElham 0\nElham -5\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    assertEquals(3, calculator.gameCount("Elham"));
+  }
 
   @Test
   public void gameCountReturnsNumberOfGamesForPerson() {
