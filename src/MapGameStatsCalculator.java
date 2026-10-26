@@ -19,19 +19,36 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
-
-  // For some waves you will need to add more private instance variables here!
+  private Map<String, Integer> highScores;
+  private Map<String, Integer> totalScores;
 
 
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
+    highScores = new HashMap<>();
+    totalScores = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
-      // TODO: add logic here to use the name and score to fill your map(s)!
+      if (!gameCounts.containsKey(name)) {
+        gameCounts.put(name, 1);
+      } else {
+        int oldCount = gameCounts.get(name);
+        gameCounts.put(name, oldCount + 1);
+      }
+      
+      if (!highScores.containsKey(name) || score > highScores.get(name)) {
+        highScores.put(name, score);
+      }
+
+      if (!totalScores.containsKey(name)) {
+        totalScores.put(name, score);
+      } else {
+        totalScores.put(name, totalScores.get(name) + score);
+      }
     }
   }
 
@@ -44,11 +61,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int gameCount(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'gameCount'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+  checkPerson(person);
+  return gameCounts.get(person);
   }
 
   /**
@@ -60,11 +74,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public int highScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highScore'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+    return highScores.get(person);
   }
 
   /**
@@ -78,11 +89,18 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
+    checkScoreData();
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    String best = null; 
+    for (String name : highScores.keySet()) {
+      int score = highScores.get(name);
+      if (best == null
+        || score > highScores.get(best)
+        || (score == highScores.get(best) && name.compareTo(best) < 0)) {
+          best = name;
+        }
+    }
+    return best;
   }
 
   /**
@@ -94,11 +112,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public double getAverageScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+    return (double) totalScores.get(person) / gameCounts.get(person);
   }
 
   /**
@@ -112,11 +127,20 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestAverageScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    checkScoreData();
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    String best = null;
+    double bestAverage = 0;
+    for (String name : gameCounts.keySet()) {
+      double average = getAverageScore(name);
+      if (best == null
+        || average > bestAverage
+        || (average == bestAverage && name.compareTo(best) < 0)) {
+          best = name;
+          bestAverage = average;
+        }
+    }
+    return best;
   }
 
   /**
