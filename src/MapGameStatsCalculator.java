@@ -21,9 +21,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<String, Integer> gameCounts;
   private Map<String, Integer> highScores;
   private Map<String, Integer> highestScore;
-  private Map<String, Integer> averageScores;
+  private Map<String, Double> averageScores;
   private Map<String, Integer> scoresSum;
   private String topScorer;
+  private String topAvg;
+  private Map<String, Double> highestAvg;
 
   // For some waves you will need to add more private instance variables here!
 
@@ -35,6 +37,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     highestScore = new HashMap<>();
     averageScores = new HashMap<>();
     scoresSum = new HashMap<>();
+    highestAvg = new HashMap<>();
 
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
@@ -69,8 +72,20 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
           topScorer = name;
         }
       }
+      averageScores.put(name, (double) scoresSum.get(name) / gameCounts.get(name));
 
-      averageScores.put(name, scoresSum.get(name) / gameCounts.get(name));
+      if (highestAvg.isEmpty()) {
+        highestAvg.put(name, averageScores.get(name));
+        topAvg = name;
+      } else {
+        double topavgNum = highestAvg.values().iterator().next();
+
+        if (averageScores.get(name) > topavgNum) {
+          highestAvg.clear();
+          highestAvg.put(name, averageScores.get(name));
+          topAvg = name;
+        }
+      }
 
     }
   }
@@ -144,11 +159,9 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestAverageScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
-
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    checkScoreData();
+    return topAvg;
   }
 
   /**
