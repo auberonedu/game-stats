@@ -11,6 +11,7 @@ import org.junit.jupiter.api.function.Executable;
 public class MapGameStatsCalculatorTest {
 
   // gameCount tests
+  
 
   @Test
   public void gameCountReturnsNumberOfGamesForPerson() {
@@ -185,8 +186,7 @@ public class MapGameStatsCalculatorTest {
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
     // Act
-    double actual = calculator.getAverageScore("Nupur");
-
+double actual = calculator.getAverageScore("Nupur");
     // Assert
     assertEquals(25.0, actual, 0.001);
   }
@@ -329,4 +329,62 @@ public class MapGameStatsCalculatorTest {
   }
 
   // Add more tests here!
+  @Test 
+  public void gameCountReturnsCorrcetCountForSinglePersonWithNegativeScores() {
+    //Arranges
+    String scoreData = "Nupur -10\n"
++"Nupur -5\n"
++ "Nupur -25\n";
+GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+//Act
+int actualCount = calculator.gameCount("Nupur");
+//assert
+assertEquals(3, actualCount);
+  }
+@Test public void highestScorerReturnsFirstAlpabeticallyOnTie() {
+  //Arrange - both have the same score 99
+  String scoreData = "Nupur 99\n"
+  + "Baya 99\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+  //Act
+  String actual = calculator.highestScorer();
+  //Assert 
+  assertEquals("Baya", actual);
+  }
+
+@Test public void getAverageScoreReturnsCorrectAverageForSingleGameWithZeroScore() {
+  //Arrange if they have a score of 0
+  String scoreData = "Nupur 0\n"
+  + "Baya 50\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+  //Act 
+  double actualAvg = calculator.getAverageScore("Nupur");
+  //Assert
+assertEquals(0.0, actualAvg, 0.001);
+  }
+  @Test public void highestAverageScoreWorkWithAllNegativeAverages() {
+    //Arrange if Rohan avg is -15 and Nupur avg is -30
+    String scoreData = "Nupur -30\n"
+    + "Rohan -10\n"
+    + "Rohan -20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    //Act
+    String actualWinner = calculator.highestAverageScorer();
+    //Assert 
+    assertEquals("Rohan", actualWinner);
+  }
+  @Test public void sortedScoresReturnsCorrectlySortedList() {
+    //Arrange
+    String scoreData = "Xinting 85\n"
+    +"Baya 90\n"
+    +"Xinting 45\n"
+    +"Xinting 100\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    //Act
+    List<Integer> actual = calculator.sortedScores("Xinting");
+    //Assert 
+    assertEquals(List.of(45,85,100), actual);
+  }
+
 }
