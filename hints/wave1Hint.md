@@ -13,9 +13,8 @@ while has next input:
         gameCounts.put(name, oldCount + 1)
 ```
 
-
-
 Implementing gameCount will require:
+
 1. Removing the UnsupportedException
 2. uncommenting checkPerson
 3. using gameCount (which will be accessible as an instance variable!) to get the value associated with the name

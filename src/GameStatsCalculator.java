@@ -10,16 +10,18 @@ public interface GameStatsCalculator {
    * @return the number of games the person played
    * @throws NoSuchElementException if the person does not exist in the score data
    */
-  public int gameCount(String person);
+    public int gameCount(String person);
 
   /**
    * Returns the highest score a person has gotten.
    * 
    * @param person the name of the person to query
    * @return the highest score the person received
-   * @throws NoSuchElementException if the person does not exist in the score data
+   @throws NoSuchElementException if the person does not exist in the score data
    */
-  public int highScore(String person);
+
+
+    public int highScore(String person);
 
   /**
    * Returns the name of the person who has the highest score.
@@ -28,9 +30,9 @@ public interface GameStatsCalculator {
    * appears first lexicographically (alphabetically).
    * 
    * @return the name of the person with the highest score
-   * @throws NoSuchElementException if there is no score data
+   * @throws new NoSuchElementException if there is no score data
    */
-  public String highestScorer();
+    public String highestScorer();
 
 
   /**
@@ -40,7 +42,7 @@ public interface GameStatsCalculator {
    * @return the average score the person received
    * @throws NoSuchElementException if the person does not exist in the score data
    */
-  public double getAverageScore(String person);
+    public double getAverageScore(String person);
   
   /**
    * Returns the name of the person who has the highest average score.
@@ -51,7 +53,7 @@ public interface GameStatsCalculator {
    * @return the name of the person with the highest average score
    * @throws NoSuchElementException if there is no score data
    */
-  public String highestAverageScorer();
+    public String highestAverageScorer();
 
 
   /**
@@ -61,5 +63,5 @@ public interface GameStatsCalculator {
    * @return a list of the scores the person received in ascending order
    * @throws NoSuchElementException if the person does not exist in the score data
    */
-  public List<Integer> sortedScores(String person);
+    public List<Integer> sortedScores(String person);
 } 

@@ -3,6 +3,7 @@
 An exercise to practice OOP, Junit tests, and maps.
 
 ## Wave 0: Setup and Understand
+
 FORK and clone this repo. `cd` into the repo directory and open VS Code. MAKE SURE YOU ARE IN THE game-stats directory before opening VS Code otherwise the tests won't be detected!
 
 Open GameStatsRunner. You will not need to modify this code, but we will run it to validate your soltuions. Run GameStatsRunner by opening it and clicking the play button in VS Code. Enter `scores.txt` as the filename when prompted. Try using it, but know that it will tell you that most of the functionality is not there yet because you have not implemented it.
