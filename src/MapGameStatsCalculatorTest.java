@@ -327,6 +327,75 @@ public class MapGameStatsCalculatorTest {
     // Assert
     assertThrows(NoSuchElementException.class, act);
   }
+@Test
+public void highScoreReturnsLaterScoreWhenPersonHasMultipleGames() {
+  // Arrange
+  String scoreData = "Nupur 10\n"
+      + "Nupur 40\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
-  // Add more tests here!
+  // Act
+  int actual = calculator.highScore("Nupur");
+
+  // Assert
+  assertEquals(40, actual);
+}
+@Test
+public void highestScorerReturnsAlphabeticallyWhenTied() {
+  // Arrange
+  String scoreData = "Xinting 50\n"
+      + "Baya 50\n"
+      + "Nupur 20\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  String actual = calculator.highestScorer();
+
+  // Assert
+  assertEquals("Baya", actual);
+}
+@Test
+public void getAverageScoreReturnsDecimalAverage() {
+  // Arrange
+  String scoreData = "Nupur 10\n"
+      + "Nupur 15\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  double actual = calculator.getAverageScore("Nupur");
+
+  // Assert
+  assertEquals(12.5, actual, 0.001);
+}
+@Test
+public void highestAverageScorerReturnsAlphabeticallyFirstPersonWhenTied() {
+  // Arrange
+  String scoreData = "Xinting 30\n"
+      + "Baya 20\n"
+      + "Baya 40\n"
+      + "Nupur 10\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  String actual = calculator.highestAverageScorer();
+
+  // Assert
+  assertEquals("Baya", actual);
+}
+@Test
+public void sortedScoresDoesNotChangeOtherResults() {
+  // Arrange
+  String scoreData = "Nupur 30\n"
+      + "Nupur 10\n"
+      + "Nupur 20\n";
+  GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+  // Act
+  List<Integer> first = calculator.sortedScores("Nupur");
+  first.add(999);
+  List<Integer> second = calculator.sortedScores("Nupur");
+
+  // Assert
+  assertEquals(List.of(10, 20, 30), second);
+}
 }
