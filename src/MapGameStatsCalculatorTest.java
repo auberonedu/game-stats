@@ -329,4 +329,30 @@ public class MapGameStatsCalculatorTest {
   }
 
   // Add more tests here!
+    @Test
+  public void gameCountReturnsNumberOfIfWeOnlyHaveOnePerson() {
+    // Arrange
+    String scoreData = "Xinting 25\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Xinting");
+
+    // Assert
+    assertEquals(1, actual);
+  }
+    @Test
+    public void gameCountReturnsNumberOfIfThatPersonHasGamesWithANegativsScore() {
+    // Arrange
+    String scoreData = "Nupur -5\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.gameCount("Nupur");
+
+    // Assert
+    assertEquals(1, actual);
+  }
 }
