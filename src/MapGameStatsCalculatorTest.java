@@ -329,4 +329,127 @@ public class MapGameStatsCalculatorTest {
   }
 
   // Add more tests here!
+
+  // wave 1
+  @Test
+  public void gameCountReturnsOneForSinglePersonWithOneGame() {
+    // arrange
+    String scoreData = "Baya 10\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    int actual = calculator.gameCount("Baya");
+
+    // assert
+    assertEquals(1, actual);
+  }
+
+  @Test
+  public void gameCountReturnsTwoForNegativeNumbersWithTwoGames() {
+    // arrange
+    String scoreData = "Baya -5\n" + "Baya -35\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    // act
+    int actual = calculator.gameCount("Baya");
+
+    //assert
+    assertEquals(2, actual);
+  }
+
+  // wave 2
+  @Test
+  public void highScoreReturnsNewHighestScoreForBaya() {
+  // arrange
+    String scoreData = "Baya 30\n" + "Baya 100\n" + "Baya 60\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    // act
+    int actual = calculator.highScore("Baya");
+    // assert
+    assertEquals(100, actual);
+  }
+
+  @Test
+  public void highScoreKeepsEachPersonSeparate() {
+    // arrange
+    String scoreData = "Nupur 90\n" + "Baya 20\n" + "Nupur 15\n" + "Baya 45\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    // act
+    int nupurHigh = calculator.highScore("Nupur");
+    int bayaHigh = calculator.highScore("Baya");
+    // assert
+    assertEquals(90, nupurHigh);
+    assertEquals(45, bayaHigh);
+  }
+
+  // wave 3:
+  @Test
+  public void highestScorerReturnsAlphabeticallyFirstOnTie() {
+    // arrange
+    String scoreData = "Nupur 50\n"
+        + "Baya 50\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    String actual = calculator.highestScorer();
+
+    // assert
+    assertEquals("Baya", actual);
+  }
+
+  // wave 4:
+  @Test
+  public void getAverageScoreReturnsScoreForSingleGame() {
+    // arrange
+    String scoreData = "Nupur 10\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    double actual = calculator.getAverageScore("Nupur");
+
+    // assert
+    assertEquals(10.0, actual, 0.001);
+  }
+
+  @Test
+  public void getAverageScoreKeepsDecimal() {
+    // arrange
+    String scoreData = "Baya 10\n"
+        + "Baya 15\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    double actual = calculator.getAverageScore("Baya");
+
+    // assert
+    assertEquals(12.5, actual, 0.001);
+  }
+
+  // wave 5
+  @Test
+  public void highestAverageScorerReturnsAlphabeticallyFirstOnTie() {
+    // arrange
+    String scoreData = "Nupur 20\n"
+        + "Baya 10\n"
+        + "Baya 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    String actual = calculator.highestAverageScorer();
+
+    // assert
+    assertEquals("Baya", actual);
+  }
+
+  @Test
+  public void highestAverageScorerReturnsOnlyPerson() {
+    // arrange
+    String scoreData = "Nupur 10\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // act
+    String actual = calculator.highestAverageScorer();
+
+    // assert
+    assertEquals("Nupur", actual);
+  }
 }
