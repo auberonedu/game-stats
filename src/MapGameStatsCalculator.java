@@ -357,7 +357,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     alphabetChars.put('q', 16);
     alphabetChars.put('r', 17);
     alphabetChars.put('s', 18);
-    alphabetChars.put('y', 19);
+    alphabetChars.put('t', 19);
     alphabetChars.put('u', 20);
     alphabetChars.put('v', 21);
     alphabetChars.put('w', 22);
