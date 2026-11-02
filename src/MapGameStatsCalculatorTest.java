@@ -33,6 +33,19 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void gameCountReturnsNumberOfGamesForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 20\n" + "Daniel 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    
+    // Actual
+    int actual = calculator.gameCount("Daniel");
+
+    // Assert
+    assertEquals(3, actual);
+  }
+
+  @Test
   public void gameCountThrowsNullPointerExceptionForNullPerson() {
     // Arrange
     String scoreData = "Nupur 10\n"
@@ -92,6 +105,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(40, actual);
+  }
+
+  @Test
+  public void highScoreReturnsHighestScoreForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.highScore("Daniel");
+
+    // Assert
+    assertEquals(30, actual);
   }
 
   @Test
@@ -157,6 +183,32 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void highestScorerReturnsPersonWithHighestScoreForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 15\n" + "Daniel 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Daniel", actual);
+  }
+
+  @Test
+  public void highestScorerReturnsPersonWithHighestScoreLexicographically() {
+    // Arrange
+    String scoreData = "Daniel 30\n" + "Nupur 30\n" + "Baya 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
+  }
+
+  @Test
   public void highestScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
     // Arrange
     String scoreData = "";
@@ -189,6 +241,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(25.0, actual, 0.001);
+  }
+
+  @Test
+  public void getAverageScoreReturnsAverageScoreForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    double actual = calculator.getAverageScore("Daniel");
+
+    // Assert
+    assertEquals(20.0, actual);
   }
 
   @Test
@@ -253,6 +318,24 @@ public class MapGameStatsCalculatorTest {
     assertEquals("Baya", actual);
   }
 
+  @Test 
+  public void highestAverageScorerReturnsPersonWithHighestAverageScoreLexicographically() {
+    // Arrange
+    String scoreData = "Xinting 30\n"
+        + "Baya 30\n"
+        + "Daniel 30\n" 
+        + "Xinting 50\n"
+        + "Baya 50\n"
+        + "Daniel 50\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestAverageScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
+  }
+
   @Test
   public void highestAverageScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
     // Arrange
@@ -286,6 +369,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(List.of(10, 20, 30, 40), actual);
+  }
+
+  @Test 
+  public void sortedScoresReturnsScoresInAscendingOrderForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    List<Integer> actual = calculator.sortedScores("Daniel");
+
+    // Assert
+    assertEquals(List.of(10, 25, 30), actual);
   }
 
   @Test
